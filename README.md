@@ -18,6 +18,7 @@ There are many possibilities to process an image according to the final result w
 <center><img src="img/convolution-equation.jpg"></center>
 <span style = "font-size:10px"> <b>Figure 1</b>. Basic convolution product formula. This mathematical formula can be seen as the combination of two matrix in image processing.</span>
 
+
 Basically, a convolution product is the result of two matrix combinations. Convolution operation needs an image and a convolution mask also called kernel. An image is actually a bidimensional matrix in which, each square corresponds to a specific pixel value. Its dimension has a value of *width x height*. This matrix will be combined with the convolution mask which is a matrix *j x k* with *j* and *k* odds values. It is important to keep in mind that if the kernel is not symetrical, it needs a rotation of 180 degrees.
 The result of the convolution product gives a new value to the central pixel of the kernel. This value is based on the weighted average of the surrounding pixels. It leads to a new image with modified pixels values.
 
