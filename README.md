@@ -18,7 +18,6 @@ There are many possibilities to process an image according to the final result w
 <center><img src="img/convolution-equation.jpg"></center>
 <span style = "font-size:10px"> <b>Figure 1</b>. Basic convolution product formula. This mathematical formula can be seen as the combination of two matrix in image processing.</span>
 
-
 Basically, a convolution product is the result of two matrix combinations. Convolution operation needs an image and a convolution mask also called kernel. An image is actually a bidimensional matrix in which, each square corresponds to a specific pixel value. Its dimension has a value of *width x height*. This matrix will be combined with the convolution mask which is a matrix *j x k* with *j* and *k* odds values. It is important to keep in mind that if the kernel is not symetrical, it needs a rotation of 180 degrees.
 The result of the convolution product gives a new value to the central pixel of the kernel. This value is based on the weighted average of the surrounding pixels. It leads to a new image with modified pixels values.
 
@@ -62,35 +61,31 @@ By looking for plugins implementing the different methods described above, we ha
 
 ### 1.3. Gaussian Blur
 
-The Gaussian Blur also known as Gaussian Smoothing operator is a convolution operator used to blur images and remove details and noise. In this sense it is similar to the mean filter, but differs by using a different kernel. Differently sized kernels containing different patterns of numbers give rise to different results under convolution. For instance, Figure X shows a 5x5 kernel that implements a Gaussian Blur filter.
+The Gaussian Blur also known as Gaussian Smoothing operator is a convolution operator used to blur images and remove details and noise (Figure 4). In this sense it is similar to the mean filter, but differs by using a different kernel.
 
-**Gaussian Blur Kernel**
-![Gaussian Kernel](https://homepages.inf.ed.ac.uk/rbf/HIPR2/figs/gausmask.gif)
+<center><img src = "./img/gaussian/demo_gaussian.png"> </img></center>
+<span style = "font-size:10px"><b>Figure 4.</b> Representation of the Gaussian distribution and equation </span><br/>
 
-The Gaussian kernel is named after Carl Friedrich Gauß (1777-1855), a German mathematician. They are part of separable kernels described above and are composed of Gaussian values. Using such kernel allows a strong decrease of the algorithmic complexity and thus a quicker processing. Gaussian Blur filtering consists in realising a convolution on a picture with a Gaussian function. The values in each row of the kernel come from the Gaussian function.
+Differently sized kernels containing different patterns of numbers give rise to different results under convolution. For instance, Figure 5 shows a 5x5 kernel that implements a Gaussian Blur filter.
 
-**Gaussian Blur 1-D Equation**
-![Gaussian Blur 1-D Equation](https://homepages.inf.ed.ac.uk/rbf/HIPR2/eqns/eqngaus1.gif)
+<center><img src = "./img/gaussian/kernel.gif" width=150> </img></center>
+<span style = "font-size:10px"><b>Figure 5.</b> Representation of the Gaussian distribution and equation </span><br/>
 
-In the equation, x is the distance from the origin for the absciss, y is the distance from the origin for the ordinate, and σ is the standard deviation of the Gaussian distribution.
+The Gaussian kernel is named after Carl Friedrich Gauß (1777-1855), a German mathematician. They are part of separable kernels described above and are composed of Gaussian values. Using such kernel allows a strong decrease of the algorithmic complexity and thus a quicker processing. Gaussian Blur filtering consists in realising a convolution on a picture with a Gaussian function (Figure 6). The values in each row of the kernel come from the Gaussian function.
 
-Again, to speed up image processing, algorithm have been developed. Here we will compare the ImageJ default ```Gaussian Blur``` filter to a JAVA  plugin, ```Accurate Gaussian Blur```. This last has been implemented for high accuracy treatement especially for 32-bits images. Also, these methods encounter the same trouble as the convolution in term of image edges.
+<center><img src = "./img/gaussian/equation_graph.png" width=250> </img></center>
+<span style = "font-size:10px">
+<b>Figure 6.</b> Representation of the Gaussian distribution and equation </span><br/>
 
-**Gaussian Blur 1-D Distribution shape**
-![Gaussian Blur 1-D Distribution shape](https://homepages.inf.ed.ac.uk/rbf/HIPR2/figs/gauss1.gif)
-
-Gaussian 1-D function
-
-
-<!-- ![alt text](/path/ "Title") commande for adding local picture -->
+In the equation, *x* is the distance from the origin for the absciss, *y* is the distance from the origin for the ordinate, and σ is the standard deviation of the Gaussian distribution. Again, to speed up image processing, algorithm have been developed. Here we will compare the ImageJ default ```Gaussian Blur``` filter to a JAVA  plugin, ```Accurate Gaussian Blur```. This last has been implemented for high accuracy treatement especially for 32-bits images. Also, these methods encounter the same trouble as the convolution in term of image edges.
 
 ### 1.4. Mean filter
+
 Among the linear filters, the most common is the mean filter beacause it is easy to implement and also reliable. As it has been said before (see section *1.3 Gaussian blur*), it is a smoothing filter which purpose is to smooth an image by blurring and remove details and noise. Doing so, a convolution mask is used, it can be with various shapes (square, rectangular or circular) and in vast majority the weights in the kernel are uniforms (meaning the values in the kernel are the same), but those can also be triangular (i.e.  inversely proportionnal to distance from the input sample). [^MAT2007]
 
 For example if S<sub>xy</sub> represents the set of coordinates in a rectangular sub image window of size *m × n* centered at point *(x,y)*, the arithmetic mean filtering process computes the average value of the initial image *g(x,y)* in the area defined by S<sub>xy</sub>. The value of the final image *f* at any point *(x,y)* is simply the arithmetic mean computed using the pixels in the region defined by S<sub>xy</sub>. In other words :
 
-<center><img src = "./img/mean/equation.png" width=250px> </img>
-<span style = "font-size:10px">Equation of the arithmetic mean filter</span></center>
+<center><img src = "./img/mean/equation.png" width=250px> </img></center>
 
 This operation can be implemented using a convolution mask in which all coefficients have a value of *1/(kw x kh)*. A mean filter simply smoothes local variations in an image. Noise is reduced as a result of blurring. The main problem of this filter is that noisy pixels (including anomalous spikes) are weighted the same as all the other pixels in the kernel. [^GAJ2011]
 Because it uses a convolution kernel, we find the same issue as describe in section *1.2 Convolve*, thus the same solutions can be applied here for the edgesof the picture.
@@ -108,51 +103,53 @@ Benchmarking in JavaScript is really complicated since the results are very vari
 
 ### 2.1. Convolve
 We compared two plugins, one realizing the "original" way to make a convolution and another one getting an extra step of FFT to get the result.
-The first thing important to note is that the output images from one method and the other are the same (Figure).
+The first thing important to note is that the output images from one method and the other are the same (Figure 7).
 
 <center><img src = "./img/convolve/RC_vs_C.png"></center>
-<span style = "font-size:10px"> **Figure X**. Convolution performed with ```Real_Convolver.java``` (on the left) and the ImageJ default convolution filter (on the right)</span>
+<span style = "font-size:10px"> **Figure 7**. Convolution performed with ```Real_Convolver.java``` (on the left) and the ImageJ default convolution filter (on the right)</span>
 
-First, the time of processing for the different images size were computed using R (Figure). This shows a diminution of processing time the smaller the image gets.
+First, the time of processing for the different images size were computed using R (Figure 8). This shows a diminution of processing time the smaller the image gets.
 
 <center><img src='./img/convolve/size.svg' width=600></center>
-<span style = "font-size:10px"> <b>Figure X</b>. Comparison of convolution processing time for 3 types of images. The reduction of pixels leads to a decrese in time processing for the ImageJ implementation of convolution and for the plugin ```Real_Convolver.java```.</span><br/><br/>
+<span style = "font-size:10px"> <b>Figure 8</b>. Comparison of convolution processing time for 3 types of images. The reduction of pixels leads to a decrese in time processing for the ImageJ implementation of convolution and for the plugin ```Real_Convolver.java```.</span><br/><br/>
 
-In a second time a comparison between <b>```Real_Convolver.java```</b> and the convolution plugin implemented into ImageJ was performed (Figure). We can see that the plugin using the step of FFT, the ImageJ's one, takes less time to process an image no matter the considered size.
+In a second time a comparison between <b>```Real_Convolver.java```</b> and the convolution plugin implemented into ImageJ was performed (Figure 9). We can see that the plugin using the step of FFT, the ImageJ's one, takes less time to process an image no matter the considered size.
 
 <center><img src='./img/convolve/vs.svg'></center>
-<span style = "font-size:10px"> <b>Figure X</b>. Processing time for different images sizes and comparison between the ImageJ convolution and the `Real_Convolver.java`. From left to right we can see the diminution of time processing for both plugins but with a better performance for the FFT extra step processing.</span><br/>
+<span style = "font-size:10px"> <b>Figure 9</b>. Processing time for different images sizes and comparison between the ImageJ convolution and the `Real_Convolver.java`. From left to right we can see the diminution of time processing for both plugins but with a better performance for the FFT extra step processing.</span>
 
 ### 2.2. Gaussian Blur
 
-In regards to Gaussian blur, after having executed the two plugins on a same image, we have compared their execution time and results are introduced in figure x. Here, just four plots are represented but the trend in the twelves graph generated were the same.
+In regards to Gaussian blur, after having executed the two plugins on a same image, we have compared their execution time and results are introduced in figure 10. Here, just four plots are represented but the trend in the twelves graph generated were the same.
 
-![Figure with 4 plots](https://)
-*FigureX : Representation of the benchmark of ImageJ gaussian blur and accurate gaussian blur plugin*
-
+<center><img src = "./img/gaussian/Rplot_Gaussian.png" width=600> </img></center>
+<span style = "font-size:10px"><b>Figure 10.</b> Representation of the benchmark of ImageJ gaussian blur and accurate gaussian blur plugin </span>
 
 
 ### 2.3. Mean filter
-The results of this benchmark are represented in *FigureX*.
+The results of this benchmark are represented in Figure 11.
 
-<center><img src = "./img/mean/boxplots.png" width=600> </img>
-<span style = "font-size:10px">FigureX : Representation of the benchmark for the mean filter of ImageJ </span>
-</center></br>
+<center><img src = "./img/mean/boxplots.png" width=600> </img></center>
+<span style = "font-size:10px"><b>Figure 11.</b> Representation of the benchmark for the mean filter of ImageJ </span></br>
+
 We obtain 4 graphics (one per type of image) which contains 3 boxplot (one per size of image) comparing the difference of time processing. We can see there's no real differences for the time processing between the type of image. However it is not the case for the size that shows the bigger the image is, the longer the processing last.
 
 ## 3. Discussion
 The several benchmarks performed allowed us to observe certain behaviors for the different plugins tested.
 
 For the convolution part, we have seen that the algorithm using an FFT before the convolution (ImageJ) seems to have better performances than the `Real_Convolver.java`. As expected we saw a decrease of processing time the less the image is big. That can easily be explained by the fact that it needs less computing for tiny image because there are less pixels to process.
+The time difference between the Gaussian Blur filter and the Accurate Gaussian blur filter can be explain by the fact that this last has high accuracy. We can also say that images size have an influence on process duration. Same thing on image type.
+
+According to our results, we can say that there is a time difference between the Gaussian Blur filter and the Accurate Gaussian blur filter which can be explain by the fact that this last has high accuracy taking more time when processed. We can also say that images size have an influence on process duration, this one beeing longer with larger image. In the same way, the image type influence the process duration.
 
 Concerning the mean filter, the results of the benchmark do not allow us to conclude because of the lack of alternative plugins and the weak sturdiness of the benchmarking using JavaScript. This can be explained by the fact that the mean filter isn't a good noise removal, due to its simple algorithm. Several other methods, like Gaussian blur filter or median filter (no linear), have been developed to produce more efficients filters for noise removal.
 
 ## Conclusion
 Through this work, we were able to study the different process used for 2D filtering. The final goal is to implement the best algorithm into a "web ImageJ like" for each filter studied.
 
-For a first approach we will implement the basic approach of convolution. For the further steps, we would like to use the convolution algorithm found in ImageJ source code. This will depends on the work of the team working on FFT. We will also implement the recognition of separable kernels to increase a bit more the processing by creating two vectors that will be used to make the convolution in two steps.
+For the further steps, we decided to use the convolution algorithm found in ImageJ source code. We will also implement the recognition of separable kernels to increase a bit more the processing by creating two vectors that will be used to make the convolution.
 
-We strongly consider to implement a `Convolve` class which has the purpose to make easier the implementation of all 2-Dimensions filters. Thus, those would be implemented by simply calling this class and specifying the paramaters adapted in agreement with the operation to apply.
+We also consider to implement a `Convolve` Class which has the purpose to make easier the implementation of the Gaussian Blur and mean filter implementations. Thus, those would be implemented by simply calling this class and specifying the paramaters adapted in agreement with the operation to apply.
 
 ## References
 [^MAT2007]: MATT HALL. Smooth operator: Smoothing seismic interpretations and attributes. The Leading Edge. 2007 Jan;26(1):16–20.
