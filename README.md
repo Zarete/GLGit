@@ -65,18 +65,21 @@ By looking for plugins implementing the different methods described above, we ha
 The Gaussian Blur also known as Gaussian Smoothing operator is a convolution operator used to blur<sup>[7]</sup> images and remove details and noise (Figure 4). In this sense it is similar to the mean filter, but differs by using a different kernel.
 
 <center><img src = "./img/gaussian/demo_gaussian.png"> </img></center>
-<span style = "font-size:10px"><b>Figure 4.</b> Result of Gaussian blur filtering. (A) Original picture. (B) Filtered image. </span><br/>
+<span style = "font-size:10px"><b>Figure 4.</b> Result of Gaussian blur filtering. (A) Original picture. (B) Filtered image. </span>
+<br/><br/>
 
 Differently sized kernels containing different patterns of numbers give rise to different results under convolution. For instance, Figure 5 shows a 5x5 kernel that implements a Gaussian Blur filter.
 
 <center><img src = "./img/gaussian/kernel.gif" width=150> </img></center>
-<span style = "font-size:10px"><b>Figure 5.</b> Example of a Gaussian kernel.</span><br/>
+<span style = "font-size:10px"><b>Figure 5.</b> Example of a Gaussian kernel.</span>
+<br/><br/>
 
 The Gaussian kernel is named after Carl Friedrich Gauß (1777-1855), a German mathematician. They belong to separable kernels described above and are composed of Gaussian values obtained from the Gauss distribution (Figure 6). Using such kernel allows a strong decrease of the algorithmic complexity and thus a quicker processing<sup>[8]</sup>. Gaussian Blur filtering consists in realising a convolution on a picture with a Gaussian kernel.
 
 <center><img src = "./img/gaussian/equation_graph.png" width=250> </img></center>
 <span style = "font-size:10px">
-<b>Figure 6.</b> Representation of the Gaussian distribution and equation.</span><br/>
+<b>Figure 6.</b> Representation of the Gaussian distribution and equation.</span>
+<br/><br/>
 
 In the equation, *x* is the distance from the origin for the absciss, *y* is the distance from the origin for the ordinate, and σ is the standard deviation of the Gaussian distribution. Again, to speed up image processing, algorithm have been developed. Here we will compare the ImageJ default ```Gaussian Blur``` filter to a JAVA  plugin, ```Accurate Gaussian Blur``` (credit to Michael Schmid). This last has been implemented for high accuracy treatement especially for 32-bits images. Also, these methods encounter the same trouble as the convolution in term of image edges.
 
@@ -108,11 +111,13 @@ The first thing important to note is that the output images from one method and 
 
 <center><img src = "./img/convolve/RC_vs_C.png"></center>
 <span style = "font-size:10px"> <b>Figure 7.</b> Convolution performed with ```Real_Convolver.java``` (on the left) and the ImageJ default convolution filter (on the right)</span>
+<br/><br/>
 
 First, the time of processing for the different images size were computed using R (Figure 8). This shows a diminution of processing time the smaller the image gets.
 
 <center><img src='./img/convolve/size.svg' width=600></center>
-<span style = "font-size:10px"> <b>Figure 8</b>. Comparison of convolution processing time for 3 types of images. The reduction of pixels leads to a decrease in time processing for the ImageJ implementation of convolution and for the plugin ```Real_Convolver.java```.</span><br/><br/>
+<span style = "font-size:10px"> <b>Figure 8</b>. Comparison of convolution processing time for 3 types of images. The reduction of pixels leads to a decrease in time processing for the ImageJ implementation of convolution and for the plugin ```Real_Convolver.java```.</span>
+<br/><br/>
 
 In a second time, a comparison between <b>```Real_Convolver.java```</b> and the convolution plugin implemented into ImageJ was performed (Figure 9). We can see that the plugin using the step of FFT, the ImageJ's one, takes less time to process an image no matter the considered size.
 
@@ -124,7 +129,8 @@ In a second time, a comparison between <b>```Real_Convolver.java```</b> and the 
 In regards to Gaussian blur, after running the two plugins on a same image, we have compared their execution time and results are introduced in figure 10. Here, just four plots are represented but the tendency in the twelves graphs generated were the same.
 
 <center><img src = "./img/gaussian/Rplot_Gaussian.png" width=600> </img></center>
-<span style = "font-size:10px"><b>Figure 10.</b> Representation of time processing for ImageJ Gaussian blur and accurate gaussian blur plugin.</span><br/>
+<span style = "font-size:10px"><b>Figure 10.</b> Representation of time processing for ImageJ Gaussian blur and accurate gaussian blur plugin.</span>
+<br/><br/>
 
 The general tendency for each boxplot if we compare both processes is the same. The accurate plugin has an execution time always longer than the imageJ default filter.
 
@@ -135,7 +141,8 @@ If we take a look at the values on ordinate, we notice a time diminution when we
 The results of this benchmark are represented in Figure 11.
 
 <center><img src = "./img/mean/boxplots.png" width=600> </img></center>
-<span style = "font-size:10px"><b>Figure 11.</b> Representation of the benchmark for the mean filter of ImageJ </span></br>
+<span style = "font-size:10px"><b>Figure 11.</b> Representation of the benchmark for the mean filter of ImageJ </span>
+<br/><br/>
 
 We obtain 4 graphics (one per type of image) which contains 3 boxplots (one per size of image) comparing the differences of time processing. We notice no real differences of time processing regarding image types. However it is not the case for the size that shows the bigger the image is, the longer the processing last.
 
