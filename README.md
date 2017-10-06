@@ -12,7 +12,7 @@ Thomas MAUCOURT
 ## Introduction
 <span style = "text-align:justify">
 
-The development of technologies allowing images captures has permited scientists to use new devices in many domains such as astronomy, geology, biology, etc... (*Add reasons why they use this tools*). The main problem to deal with images is their processing since a raw format image is rarely sufficient to make analysis. Actually there are additional steps required which are called image processing. After treatment the images are ready for analysis and interpretations.
+The development of technologies allowing images captures has permited scientists to use new devices in many domains such as astronomy, geology, biology, etc... The main problem to deal with images is their processing since a raw format image is rarely sufficient to make analysis. Actually there are additional steps required which are called image processing. After treatment the images are ready for analysis and interpretations.
 There are many possibilities to process an image according to the final result wanted. In this report we will focus on 2D Linear Filters. Filters are used to convert an input image into an output, based on the convolution product principle (Figure 1).
 
 <center><img src="img/convolution-equation.jpg"></center>
@@ -21,12 +21,12 @@ There are many possibilities to process an image according to the final result w
 Basically, a convolution product is the result of two matrix combinations. Convolution operation needs an image and a convolution mask also called kernel. An image is actually a bidimensional matrix in which, each square corresponds to a specific pixel value. Its dimension has a value of *width x height*. This matrix will be combined with the convolution mask which is a matrix *j x k* with *j* and *k* odds values. It is important to keep in mind that if the kernel is not symetrical, it needs a rotation of 180 degrees.
 The result of the convolution product gives a new value to the central pixel of the kernel. This value is based on the weighted average of the surrounding pixels. It leads to a new image with modified pixels values.
 
-Through this report we will discuss three filters using this mathematical principle in ImageJ[^IMAGEJ] software. The first operation studied will be the convolution, then the Gaussian blur and finally the mean filter.
+Through this report we will discuss three filters using this mathematical principle in ImageJ<sup>[1]</sup> software. The first operation studied will be the convolution, then the Gaussian blur and finally the mean filter.
 
 ## 1. Material and Methods
 
 ### 1.1. ImageJ
-To perform the experiments explained later in this report ImageJ[^IMAGEJ] software has been used. It is an open source software regrouping a large community and allowing images manipulations and analyses. It is widely used across the world by many researchers in all kinds of domains. One thing that make the popularity of ImageJ is the possibility to easily develop plugins to automatize image processing and analyses. The other advantage is its well documented API (Application Programming Interface). Thus we decided to use this software because the main goal of the project is to develop an adaptation of ImageJ for web browsers.
+To perform the experiments explained later in this report ImageJ<sup>[1]</sup> software has been used. It is an open source software regrouping a large community and allowing images manipulations and analyses. It is widely used across the world by many researchers in all kinds of domains. One thing that make the popularity of ImageJ is the possibility to easily develop plugins to automatize image processing and analyses. The other advantage is its well documented API (Application Programming Interface). Thus we decided to use this software because the main goal of the project is to develop an adaptation of ImageJ for web browsers.
 
 ### 1.2. Convolve
 We previously define that convolution needed an image and a kernel to be performed. That raises a problem of coverage between the mask and the targeted sample of the picture. Indeed at the borders of the image the kernel can have some of its parts outside the picture (Figure 1). To solve this issue several possibilities can be applied :
@@ -43,16 +43,16 @@ As convolution is a well defined mathematical principle very used in many domain
 * recursive filtering
 * fast convolution
 
-First the "basic approach". It is simply based on the definition of convolution. It computes the inner product of the current sample of the image and the kernel. The value obtained is then stored into the central mask's pixel. For information, the algorithmic complexity of such method is *O(N²)*. This approach is still widely used due to its simplicity and the possibility to parallelize the processing[^SKA2008].
+First the "basic approach". It is simply based on the definition of convolution. It computes the inner product of the current sample of the image and the kernel. The value obtained is then stored into the central mask's pixel. For information, the algorithmic complexity of such method is *O(N²)*. This approach is still widely used due to its simplicity and the possibility to parallelize the processing<sup>[2]</sup>.
 
-An other way to perform convolution is allowed in the case of specific kernels called separable [^ROB1986]. A kernel is separable in 2-Dimensions when it can be decomposed into two vectors (a column vector and a row vector) (Figure 2). These kinds of kernels are found in Gaussian masks for example. Such kernels decrease the complexity because they allow to separate the basic convolution process into two simpler convolutions. First the columns are treated by convolution with the column kernel. Then the process is repeated with the row kernel.
+An other way to perform convolution is allowed in the case of specific kernels called separable <sup>[3]</sup>. A kernel is separable in 2-Dimensions when it can be decomposed into two vectors (a column vector and a row vector) (Figure 2). These kinds of kernels are found in Gaussian masks for example. Such kernels decrease the complexity because they allow to separate the basic convolution process into two simpler convolutions. First the columns are treated by convolution with the column kernel. Then the process is repeated with the row kernel.
 
 <center><img src = "./img/convolve/separable_kernel.png" width=400px></center>
 <span style = "font-size:10px"> <b>Figure 3</b>. Specific separable kernel. The original kernel (left) can be splitted into two 1-Dimension kernels. A row kernel and a column kernel. Each kernel will be applied to the picture separatly.</span><br/>
 
-The third method available to apply convolution is called recursive filtering[^BJA2002]. This approach is based on the dependence of a sample (rank *n*) with the previous one (rank *n-1*, *n-2*, ...). It needs a step to define the recursive formula needed for the convolution product wanted. This can be very hard task. Thus it is not a very used method among the others one.
+The third method available to apply convolution is called recursive filtering<sup>4</sup>. This approach is based on the dependence of a sample (rank *n*) with the previous one (rank *n-1*, *n-2*, ...). It needs a step to define the recursive formula needed for the convolution product wanted. This can be very hard task. Thus it is not a very used method among the others one.
 
-The last approach we will discuss is the most popular and is actually the one implemented into ImageJ software. The fast convolution[^JAN2000] is based on the frequency domain[^RNB2006] unlike the previous we discussed that were used into the spatial (or time) domain. This method go through an extra step by using the Fast Fourier Transform (FFT)[^RNB2006] on the input signal before performing convolution. According to a mathematical principle a convolution into the frequency domain is equivalent to a product of Fourier Transforms (Reference). This means that a convolution into the spatial domain is equivalent to a multiplication into the frequency domain. Thus :
+The last approach we will discuss is the most popular and is actually the one implemented into ImageJ software. The fast convolution<sup>5</sup> is based on the frequency domain<sup>6</sup> unlike the previous we discussed that were used into the spatial (or time) domain. This method go through an extra step by using the Fast Fourier Transform (FFT)<sup>6</sup> on the input signal before performing convolution. According to a mathematical principle a convolution into the frequency domain is equivalent to a product of Fourier Transforms (Reference). This means that a convolution into the spatial domain is equivalent to a multiplication into the frequency domain. Thus :
 <center><b><i>kernel * sample = FFT<sup>-1</sup>(FFT(kernel) x FFT(sample))</i></b></center>
 ('*' stands for convolution and 'x' for multiplication)
 <br/><br/>
@@ -81,13 +81,13 @@ In the equation, *x* is the distance from the origin for the absciss, *y* is the
 
 ### 1.4. Mean filter
 
-Among the linear filters, the most common is the mean filter beacause it is easy to implement and also reliable. As it has been said before (see section *1.3 Gaussian blur*), it is a smoothing filter which purpose is to smooth an image by blurring and remove details and noise. Doing so, a convolution mask is used, it can be with various shapes (square, rectangular or circular) and in vast majority the weights in the kernel are uniforms (meaning the values in the kernel are the same), but those can also be triangular (i.e.  inversely proportionnal to distance from the input sample). [^MAT2007]
+Among the linear filters, the most common is the mean filter beacause it is easy to implement and also reliable. As it has been said before (see section *1.3 Gaussian blur*), it is a smoothing filter which purpose is to smooth an image by blurring and remove details and noise. Doing so, a convolution mask is used, it can be with various shapes (square, rectangular or circular) and in vast majority the weights in the kernel are uniforms (meaning the values in the kernel are the same), but those can also be triangular (i.e.  inversely proportionnal to distance from the input sample)<sup>[7]</sup>.
 
 For example if S<sub>xy</sub> represents the set of coordinates in a rectangular sub image window of size *m × n* centered at point *(x,y)*, the arithmetic mean filtering process computes the average value of the initial image *g(x,y)* in the area defined by S<sub>xy</sub>. The value of the final image *f* at any point *(x,y)* is simply the arithmetic mean computed using the pixels in the region defined by S<sub>xy</sub>. In other words :
 
 <center><img src = "./img/mean/equation.png" width=250px> </img></center>
 
-This operation can be implemented using a convolution mask in which all coefficients have a value of *1/(kw x kh)*. A mean filter simply smoothes local variations in an image. Noise is reduced as a result of blurring. The main problem of this filter is that noisy pixels (including anomalous spikes) are weighted the same as all the other pixels in the kernel. [^GAJ2011]
+This operation can be implemented using a convolution mask in which all coefficients have a value of *1/(kw x kh)*. A mean filter simply smoothes local variations in an image. Noise is reduced as a result of blurring. The main problem of this filter is that noisy pixels (including anomalous spikes) are weighted the same as all the other pixels in the kernel. <sup>[8]</sup>
 Because it uses a convolution kernel, we find the same issue as describe in section *1.2 Convolve*, thus the same solutions can be applied here for the edgesof the picture.
 
 During our research, we did not find any plugins performing mean filter in a different way than the one implemented in ImageJ software. That is why the benchmarking were realised only with the mean filter already implemented in ImageJ.
@@ -106,7 +106,7 @@ We compared two plugins, one realizing the "original" way to make a convolution 
 The first thing important to note is that the output images from one method and the other are the same (Figure 7).
 
 <center><img src = "./img/convolve/RC_vs_C.png"></center>
-<span style = "font-size:10px"> **Figure 7**. Convolution performed with ```Real_Convolver.java``` (on the left) and the ImageJ default convolution filter (on the right)</span>
+<span style = "font-size:10px"> <b>Figure 7.</b> Convolution performed with ```Real_Convolver.java``` (on the left) and the ImageJ default convolution filter (on the right)</span>
 
 First, the time of processing for the different images size were computed using R (Figure 8). This shows a diminution of processing time the smaller the image gets.
 
@@ -152,20 +152,20 @@ For the further steps, we decided to use the convolution algorithm found in Imag
 We also consider to implement a `Convolve` Class which has the purpose to make easier the implementation of the Gaussian Blur and mean filter implementations. Thus, those would be implemented by simply calling this class and specifying the paramaters adapted in agreement with the operation to apply.
 
 ## References
-[^MAT2007]: MATT HALL. Smooth operator: Smoothing seismic interpretations and attributes. The Leading Edge. 2007 Jan;26(1):16–20.
+1. Rasband, W.S., ImageJ, U. S. National Institutes of Health, Bethesda, Maryland, USA, https://imagej.nih.gov/ij/, 1997-2016.
 
-[^GAJ2011]: Gajanand Gupta. Algorithm for Image Processing Using Improved Median Filter and Comparison of Mean, Median and Improved Median Filter. International Journal of Soft Computing and Engineering (IJSCE) ISSN. 2011 Nov;Volume-1(Issue-5):2231–307.
+2. S. Kadam. Parallelization of Low-Level Computer Vision Algorithms on Clusters. In AMS ’08: Proceedings of the 2008 Second Asia International Conference on Modelling & Simulation (AMS), pages 113–118, Washington, DC, USA, 2008. IEEE Computer Society. ISBN: 978-0-7695-3136-6.
 
-[^BJA2002]: B. Jähne. Digital Image Processing. Springer, 5th edition, 2002.
+3. Robert Hummel and David Loew. Computing Large-Kernel Convolutions of Images. Technical report, New York University, Courant Institute of Mathematical Sciences, 1986.
 
-[^JAN2000]: Jan J, Engineers I of E. Digital Signal Filtering, Analysis and Restoration. IET; 2000. 430 p.
+4. B. Jähne. Digital Image Processing. Springer, 5th edition, 2002.
 
-[^RNB2006]: R. N. Bracewell. Fourier Analysis and Imaging. Springer, 2006
+5. Jan J, Engineers I of E. Digital Signal Filtering, Analysis and Restoration. IET; 2000. 430 p.
 
-[^ROB1986]: Robert Hummel and David Loew. Computing Large-Kernel Convolutions of Images. Technical report, New York University, Courant Institute of Mathematical Sciences, 1986.
+6. R. N. Bracewell. Fourier Analysis and Imaging. Springer, 2006
 
-[^SKA2008]: S. Kadam. Parallelization of Low-Level Computer Vision Algorithms on Clusters. In AMS ’08: Proceedings of the 2008 Second Asia International Conference on Modelling & Simulation (AMS), pages 113–118, Washington, DC, USA, 2008. IEEE Computer Society. ISBN: 978-0-7695-3136-6.
+7. MATT HALL. Smooth operator: Smoothing seismic interpretations and attributes. The Leading Edge. 2007 Jan;26(1):16–20.
 
-[^IMAGEJ] : Rasband, W.S., ImageJ, U. S. National Institutes of Health, Bethesda, Maryland, USA, https://imagej.nih.gov/ij/, 1997-2016.
+8. Gajanand Gupta. Algorithm for Image Processing Using Improved Median Filter and Comparison of Mean, Median and Improved Median Filter. International Journal of Soft Computing and Engineering (IJSCE) ISSN. 2011 Nov;Volume-1(Issue-5):2231–307.
 
 </span>
