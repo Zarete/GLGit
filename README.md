@@ -35,7 +35,8 @@ We previously define that convolution needed an image and a kernel to be perform
 * starting the processing at position *(X<sub>kw-1/2</sub>, Y<sub>kh-1/2</sub>)* with *kw* and *kh* respectively the kernel's width and height
 
 <center><img src = "./img/convolve/outside_kernel.png" width=200px></center>
-<span style = "font-size:10px"> <b>Figure 2</b>. Boundary issue for a 3 x 3 kernel. On the edges of the picture some parts of the kernel can be located outside the image.</span><br/>
+<span style = "font-size:10px"> <b>Figure 2</b>. Boundary issue for a 3 x 3 kernel. On the edges of the picture some parts of the kernel can be located outside the image.</span>
+<br/><br/>
 
 As convolution is a well defined mathematical principle very used in many domains and especially in image processing, several methods have been developed to improve the computation. We can find four main implementations of convolution :
 * basic approach
@@ -48,7 +49,8 @@ First the "basic approach". It is simply based on the definition of convolution.
 An other way to perform convolution is allowed in the case of specific kernels called separable <sup>[3]</sup>. A kernel is separable in 2-Dimensions when it can be decomposed into two vectors (a column vector and a row vector) (Figure 2). These kinds of kernels are found in Gaussian masks for example. Such kernels decrease the complexity because they allow to separate the basic convolution process into two simpler convolutions. First the columns are treated by convolution with the column kernel. Then the process is repeated with the row kernel.
 
 <center><img src = "./img/convolve/separable_kernel.png" width=400px></center>
-<span style = "font-size:10px"> <b>Figure 3</b>. Specific separable kernel. The original kernel (left) can be splitted into two 1-Dimension kernels. A row kernel and a column kernel. Each kernel will be applied to the picture separatly.</span><br/>
+<span style = "font-size:10px"> <b>Figure 3</b>. Specific separable kernel. The original kernel (left) can be splitted into two 1-Dimension kernels. A row kernel and a column kernel. Each kernel will be applied to the picture separatly.</span>
+<br/><br/>
 
 The third method available to apply convolution is called recursive filtering<sup>4</sup>. This approach is based on the dependence of a sample (rank *n*) with the previous one (rank *n-1*, *n-2*, ...). It needs a step to define the recursive formula needed for the convolution product wanted. This can be very hard task. Thus it is not a very used method among the others one.
 
