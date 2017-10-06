@@ -4,7 +4,7 @@
 <span style = "color:grey">**Authors**</span><br/>
 Gary BOUCHENTOUF <b>*</b>
 Tristan FRANCES
-Thomas MAUCOURT
+Thomas MAUCOURT<br/>
 <span style = "color:grey;float:right">**Referent**</span>
 Jean-Christophe TAVEAU
 
