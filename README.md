@@ -1,8 +1,8 @@
 # <center>2D filters methods for image processing</center>
-<span style = "color:grey">**Formation**</span> <span style = "color:grey;float:right">**Course 4TBI901U**
+<span style = "color:grey">**Formation**</span> Master 2 Bioinformatic
+<span style = "color:grey;float:right">**Course 4TBI901U**
 </span>
-Master 2 Bioinformatic <span style = "float:right">Structural Bioinformatic</span>
-<br/>
+Structural Bioinformatic<br/>
 <span style = "color:grey">**Authors**</span> <span style = "color:grey;float:right">**Referent**</span>
 Gary BOUCHENTOUF <b>*</b> <span style = "float:right">Jean-Christophe TAVEAU</span>
 Tristan FRANCES
